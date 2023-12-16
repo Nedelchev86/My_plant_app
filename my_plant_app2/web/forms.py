@@ -10,6 +10,7 @@ class ProfileBase(forms.ModelForm):
         labels = {
             "first_name": "First Name",
             "last_name": "Last Name",
+            "picture": "Profile Picture"
         }
 
 
