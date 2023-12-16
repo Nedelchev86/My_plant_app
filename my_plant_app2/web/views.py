@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from my_plant_app2.web.forms import CreateProfile, CreatePlant, EditPlant, DeletePlant
+from my_plant_app2.web.forms import CreateProfile, CreatePlant, EditPlant, DeletePlant, EditProfile, DeleteProfil
 from my_plant_app2.web.models import Profile, Plant
 
 
@@ -42,10 +42,38 @@ def profile_details(request):
     return render(request, "profile/profile-details.html", context)
 
 def profile_edit(request):
-    pass
+    profile = Profile.objects.first()
+
+    if request.method == "GET":
+        form = EditProfile(instance=profile)
+
+    else:
+        form = EditProfile(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect("details profile")
+    context = {
+        "form": form,
+    }
+
+    return render(request, "profile/edit-profile.html", context)
+
 
 def profile_delete(request):
-    pass
+
+    profile = Profile.objects.first()
+    if request.method == "GET":
+        form = DeleteProfil(instance=profile)
+    else:
+        form = DeleteProfil(instance=profile)
+        form.save()
+        return redirect("home page")
+
+    context = {
+        "form": form
+    }
+
+    return render(request, "profile/delete-profile.html", context)
 
 
 def catalogue(request):

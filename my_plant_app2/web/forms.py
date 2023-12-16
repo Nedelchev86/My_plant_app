@@ -3,14 +3,29 @@ from django import forms
 from my_plant_app2.web.models import Profile, Plant
 
 
-class CreateProfile(forms.ModelForm):
+class ProfileBase(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ("picture",)
+        fields = "__all__"
         labels = {
             "first_name": "First Name",
             "last_name": "Last Name",
         }
+
+
+
+class CreateProfile(ProfileBase):
+    class Meta:
+        model = Profile
+        exclude = ("picture",)
+
+
+class EditProfile(ProfileBase):
+    pass
+
+class DeleteProfil(ProfileBase):
+    def save(self, commit=True):
+        self.instance.delete()
 
 
 class PlantBaseForm(forms.ModelForm):
@@ -33,7 +48,7 @@ class DeletePlant(PlantBaseForm):
         # super(DeletePlant, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].disabled = True
-            
+
     def save(self, commit=True):
         if commit:
             self.instance.delete()
