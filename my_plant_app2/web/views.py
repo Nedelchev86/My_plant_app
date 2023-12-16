@@ -1,13 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+from my_plant_app2.web.forms import CreateProfile
+from my_plant_app2.web.models import Profile
+
 
 # Create your views here.
 
 def index(request):
-    return render(request, "home-page.html")
+    profile = Profile.objects.first()
+
+    context = {
+        "profile": profile
+    }
+    return render(request, "home-page.html", context)
 
 
 def profile_create(request):
-    pass
+    if request.method == "GET":
+        form = CreateProfile()
+    else:
+        form = CreateProfile(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("catalogue")
+
+    context = {
+        "form": form,
+    }
+    return render(request, "profile/create-profile.html", context)
 
 def profile_details(request):
     pass
@@ -21,7 +41,7 @@ def profile_delete(request):
 
 
 def catalogue(request):
-    pass
+    return render(request, "common/catalogue.html")
 
 def create_plant(request):
     pass

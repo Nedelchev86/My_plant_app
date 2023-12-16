@@ -16,11 +16,11 @@
 
         <h1><a class="index-navigation" href="{% url 'home page' %}">MyPlants</a></h1>
         <nav>
-
+     {% if not profile %}
             <!-- if the user has not created a profile -->
                 <a href="{% url 'create profile' %}">Create Profile</a>
 
-            {% if  has_profile %}
+       {% else %}
             <!-- if the user has created a profile -->
                 <a href="{% url 'catalogue' %}">Catalogue</a>
                 <a href="{% url 'create plant' %}">Create Plant</a>
