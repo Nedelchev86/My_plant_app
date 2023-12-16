@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from my_plant_app2.web.forms import CreateProfile
+from my_plant_app2.web.forms import CreateProfile, CreatePlant, EditPlant
 from my_plant_app2.web.models import Profile, Plant
 
 
@@ -51,15 +51,49 @@ def catalogue(request):
     }
     return render(request, "common/catalogue.html", context)
 
+
 def create_plant(request):
-    return render(request, "plant/create-plant.html")
+    if request.method == "GET":
+        form = CreatePlant()
+    else:
+        form = CreatePlant(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("catalogue")
+
+    context = {
+        "form": form
+    }
+    return render(request, "plant/create-plant.html", context)
+
 
 def edit_plant(request, pk):
-    pass
+    plant = Plant.objects.get(pk=pk)
+    if request.method == "GET":
+        form = EditPlant(instance=plant)
+    else:
+        form = EditPlant(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            return redirect("catalogue")
+
+    context = {
+        "form": form,
+        "plant": plant
+    }
+
+    return render(request, "plant/edit-plant.html", context)
+
 
 def delete_plant(request, pk):
     pass
 
 
 def details_plant(request, pk):
-    pass
+    plant = Plant.objects.get(pk=pk)
+
+    context = {
+        "plant": plant
+    }
+
+    return render(request, "plant/plant-details.html", context)
