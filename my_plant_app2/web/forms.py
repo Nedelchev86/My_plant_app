@@ -24,3 +24,12 @@ class CreatePlant(PlantBaseForm):
 
 class EditPlant(PlantBaseForm):
     pass
+
+
+class DeletePlant(PlantBaseForm):
+
+
+
+    def save(self, commit=True):
+        if commit:
+            self.instance.delete()
