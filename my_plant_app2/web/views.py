@@ -29,9 +29,17 @@ def profile_create(request):
     }
     return render(request, "profile/create-profile.html", context)
 
-def profile_details(request):
-    pass
 
+def profile_details(request):
+    profile = Profile.objects.first()
+    plants = len(Plant.objects.all())
+
+    context = {
+        "profile": profile,
+        "plants": plants
+    }
+
+    return render(request, "profile/profile-details.html", context)
 
 def profile_edit(request):
     pass

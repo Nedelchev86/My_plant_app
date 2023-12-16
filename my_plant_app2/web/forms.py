@@ -28,8 +28,13 @@ class EditPlant(PlantBaseForm):
 
 class DeletePlant(PlantBaseForm):
 
-
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # super(DeletePlant, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].disabled = True
+            
     def save(self, commit=True):
         if commit:
             self.instance.delete()
+
