@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from my_plant_app2.web.forms import CreateProfile
-from my_plant_app2.web.models import Profile
+from my_plant_app2.web.models import Profile, Plant
 
 
 # Create your views here.
@@ -41,10 +41,18 @@ def profile_delete(request):
 
 
 def catalogue(request):
-    return render(request, "common/catalogue.html")
+    plants = Plant.objects.all()
+    profile = Profile.objects.first()
+
+
+    context = {
+        "plants": plants,
+        "profile": profile
+    }
+    return render(request, "common/catalogue.html", context)
 
 def create_plant(request):
-    pass
+    return render(request, "plant/create-plant.html")
 
 def edit_plant(request, pk):
     pass
