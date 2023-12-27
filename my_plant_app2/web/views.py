@@ -80,7 +80,8 @@ def profile_delete(request):
         return redirect("home page")
 
     context = {
-        "form": form
+        "form": form,
+
     }
 
     return render(request, "profile/delete-profile.html", context)

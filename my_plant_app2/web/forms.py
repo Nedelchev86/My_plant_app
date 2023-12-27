@@ -27,6 +27,7 @@ class EditProfile(ProfileBase):
 class DeleteProfil(ProfileBase):
     def save(self, commit=True):
         self.instance.delete()
+        Plant.objects.all().delete()
 
 
 class PlantBaseForm(forms.ModelForm):
