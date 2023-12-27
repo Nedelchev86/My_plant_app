@@ -33,6 +33,11 @@ class PlantBaseForm(forms.ModelForm):
     class Meta:
         model = Plant
         fields = "__all__"
+        labels = {
+            'image': 'Image URL',
+
+    }
+
 
 class CreatePlant(PlantBaseForm):
     pass

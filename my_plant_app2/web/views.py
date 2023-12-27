@@ -6,11 +6,20 @@ from my_plant_app2.web.models import Profile, Plant
 
 # Create your views here.
 
-def index(request):
+def get_profile():
     profile = Profile.objects.first()
+    if profile:
+        return profile
+    else:
+        return None
+
+
+def index(request):
+    profile = get_profile()
 
     context = {
-        "profile": profile
+        "profile": profile,
+        "do_not_show": True,
     }
     return render(request, "home-page.html", context)
 
@@ -26,6 +35,7 @@ def profile_create(request):
 
     context = {
         "form": form,
+        "do_not_show": True,
     }
     return render(request, "profile/create-profile.html", context)
 
@@ -79,8 +89,6 @@ def profile_delete(request):
 def catalogue(request):
     plants = Plant.objects.all()
     profile = Profile.objects.first()
-
-
     context = {
         "plants": plants,
         "profile": profile

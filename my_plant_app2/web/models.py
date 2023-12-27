@@ -12,18 +12,24 @@ class Profile(models.Model):
         blank=False,
     )
     first_name = models.CharField(
+        verbose_name="First Name",
         max_length=20,
         validators=[validate_firs_letter],
         null=False,
         blank=False,
     )
     last_name = models.CharField(
+        verbose_name="Last Name",
         max_length=20,
         validators=[validate_firs_letter],
         null=False,
         blank=False,
     )
-    picture = models.URLField(null=True, blank=True)
+    picture = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name="Profile Picture",
+    )
 
 
 class Plant(models.Model):
@@ -33,6 +39,7 @@ class Plant(models.Model):
     )
 
     type = models.CharField(
+        verbose_name="Type",
         max_length=14,
         null=False,
         blank=False,
@@ -40,7 +47,8 @@ class Plant(models.Model):
     )
 
     name = models.CharField(
-        max_length=10,
+        verbose_name="Name",
+        max_length=20,
         validators=[
             MinLengthValidator(2),
             validate_only_letter
@@ -48,5 +56,9 @@ class Plant(models.Model):
     )
 
     image = models.URLField(null=False, blank=False)
-    description = models.TextField(null=False, blank=False)
+    description = models.TextField(
+        null=False,
+        blank=False,
+        verbose_name="Description"
+    )
     price = models.FloatField(null=False, blank=False)
